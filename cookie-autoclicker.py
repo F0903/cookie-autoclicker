@@ -8,6 +8,7 @@ clicker = Clicker()
 def on_toggle(event):
     if clicker.is_clicking():
         clicker.stop()
+        clicker.wait_for_stop()
         return
     clicker.start()
 
@@ -15,4 +16,4 @@ def on_toggle(event):
 kb.on_release_key('a', on_toggle)
 
 while True:
-    sleep(1)
+    sleep(5)

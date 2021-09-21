@@ -9,8 +9,9 @@ import threading as th
 class Clicker:
     _click = False
 
-    def __init__(self, image_to_scan: str = "./click.png"):
+    def __init__(self, image_to_scan: str = "./click.png", interval=1/1000):
         self._click_image_path = image_to_scan
+        self._interval = interval
 
     def _show_match_result(result):
         vals = cv2.minMaxLoc(result)
@@ -41,7 +42,7 @@ class Clicker:
     def _run(self):
         while self._click:
             gui.click(self._click_pos[0], self._click_pos[1])
-            sleep(0.001)
+            sleep(self._interval)
 
     def is_clicking(self) -> bool:
         return self._click
@@ -59,5 +60,7 @@ class Clicker:
         if not self._click:
             return
         self._click = False
+
+    def wait_for_stop(self):
         self._run_thread.join()
         print("Stopped.")
